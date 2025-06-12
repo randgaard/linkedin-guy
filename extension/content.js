@@ -1,7 +1,10 @@
 (function() {
+  "use strict";
   // Observe DOM changes to find comment boxes
+  const selector = 'textarea.comments-comment-box__comment-texteditor, textarea.comment-box__text-editor';
+
   const observer = new MutationObserver(() => {
-    const commentBoxes = document.querySelectorAll('textarea.comments-comment-box__comment-texteditor, textarea.comment-box__text-editor');
+    const commentBoxes = document.querySelectorAll(selector);
     commentBoxes.forEach(box => {
       if (!box.dataset.aiReplyAttached) {
         addButton(box);
@@ -13,10 +16,10 @@
   observer.observe(document.body, { childList: true, subtree: true });
 
   function addButton(textArea) {
-    const btn = document.createElement('button');
-    btn.textContent = 'AI Reply';
-    btn.style.marginLeft = '5px';
-    btn.addEventListener('click', async () => {
+    const button = document.createElement('button');
+    button.textContent = 'AI Reply';
+    button.style.marginLeft = '5px';
+    button.addEventListener('click', async () => {
       const text = getPostText(textArea);
       const [tone, apiKey] = await Promise.all([
         chrome.storage.sync.get('tone').then(r => r.tone || 'friendly'),
@@ -32,7 +35,7 @@
         textArea.dispatchEvent(new Event('input', { bubbles: true }));
       }
     });
-    textArea.parentNode.appendChild(btn);
+    textArea.parentNode.appendChild(button);
   }
 
   function getPostText(textArea) {

@@ -1,10 +1,14 @@
+"use strict";
+
 function saveOptions() {
-  const apiKey = document.getElementById('apiKey').value;
-  const tone = document.getElementById('tone').value || 'friendly';
+  const apiKeyInput = document.getElementById('apiKey');
+  const toneInput = document.getElementById('tone');
+  const apiKey = apiKeyInput.value;
+  const tone = toneInput.value || 'friendly';
   chrome.storage.sync.set({ apiKey, tone }, () => {
     const status = document.getElementById('status');
     status.textContent = 'Options saved.';
-    setTimeout(() => status.textContent = '', 1000);
+    setTimeout(() => (status.textContent = ''), 1000);
   });
 }
 

@@ -1,3 +1,5 @@
+"use strict";
+
 chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
   if (request.action === 'generateReply') {
     try {
@@ -23,6 +25,12 @@ async function generateReply(prompt, tone, apiKey) {
       messages: [{ role: 'user', content: `${prompt}\nRespond with a ${tone} tone.` }]
     })
   });
+
+  if (!response.ok) {
+    throw new Error(`OpenAI request failed: ${response.status}`);
+  }
+
   const data = await response.json();
-  return data.choices && data.choices[0] ? data.choices[0].message.content.trim() : '';
+  const [choice] = data.choices || [];
+  return choice ? choice.message.content.trim() : '';
 }
