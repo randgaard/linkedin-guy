@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>LinkedIn Auto-Responder Options</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    label { display: block; margin-bottom: 10px; }
+  </style>
+</head>
+<body>
+  <h1>Extension Settings</h1>
+  <label>
+    OpenAI API Key:
+    <input type="password" id="apiKey" style="width:100%" />
+  </label>
+  <label>
+    Tone of voice:
+    <input type="text" id="tone" placeholder="friendly" style="width:100%" />
+  </label>
+  <button id="save">Save</button>
+  <p id="status"></p>
+  <script src="options.js"></script>
+</body>
+</html>
